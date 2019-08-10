@@ -2,7 +2,7 @@ import 'package:base/models/alumni.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import './widgets/record_fielddata.dart';
+
 import './widgets/recordviewbody.dart';
 
 class RecordView extends StatefulWidget {
