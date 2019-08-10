@@ -1,4 +1,4 @@
-class Student {
+class Alumni {
   String aluid;
   String firstname;
   String lastname;
@@ -15,7 +15,7 @@ class Student {
   String sesfrom;
   String branch;
 
-  Student(
+  Alumni(
       {this.aluid,
       this.branch,
       this.corradd,
@@ -52,7 +52,7 @@ class Student {
     };
   }
 
-  factory Student.frommap(datamap) => Student(
+  factory Alumni.frommap(datamap) => Alumni(
       aluid: datamap['Alu_ID'].toString(),
       branch: datamap['Branch'],
       corradd: datamap['Correspondance_Address'],

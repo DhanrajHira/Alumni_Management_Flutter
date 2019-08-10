@@ -15,7 +15,7 @@ class RecordViewFieldName extends StatelessWidget {
           child: Text(
             text,
             style: TextStyle(
-              fontSize: 20.0,
+              fontSize: 20.0, fontWeight: FontWeight.bold
             ),
           ),
         ),

@@ -1,4 +1,4 @@
-package com.example.sql;
+package com.example.base;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;

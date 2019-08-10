@@ -1,13 +1,14 @@
+import 'package:base/DBprovider.dart';
+import 'package:base/models/alumni.dart';
 import 'package:flutter/material.dart';
-import 'package:sql/DbProvider.dart';
-import './models/student.dart';
+import 'package:provider/provider.dart';
 
 class UpdateView extends StatefulWidget {
-  final Student student;
-  UpdateView({@required this.student});
+  final Alumni alumni;
+  UpdateView({@required this.alumni});
 
   @override
-  _UpdateViewState createState() => _UpdateViewState(student.aluid);
+  _UpdateViewState createState() => _UpdateViewState(alumni.aluid);
 }
 
 class _UpdateViewState extends State<UpdateView> {
@@ -63,7 +64,7 @@ class _UpdateViewState extends State<UpdateView> {
                     }
                     return null;
                   },
-                  initialValue: widget.student.firstname,
+                  initialValue: widget.alumni.firstname,
                 ),
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Last name'),
@@ -76,7 +77,7 @@ class _UpdateViewState extends State<UpdateView> {
                     }
                     return null;
                   },
-                  initialValue: widget.student.lastname,
+                  initialValue: widget.alumni.lastname,
                 ),
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Date of Birth'),
@@ -89,7 +90,7 @@ class _UpdateViewState extends State<UpdateView> {
                     }
                     return null;
                   },
-                  initialValue: widget.student.dob,
+                  initialValue: widget.alumni.dob,
                 ),
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Gender'),
@@ -102,7 +103,7 @@ class _UpdateViewState extends State<UpdateView> {
                     }
                     return null;
                   },
-                  initialValue: widget.student.gender,
+                  initialValue: widget.alumni.gender,
                 ),
                 TextFormField(
                   decoration:
@@ -116,7 +117,7 @@ class _UpdateViewState extends State<UpdateView> {
                     }
                     return null;
                   },
-                  initialValue: widget.student.corradd,
+                  initialValue: widget.alumni.corradd,
                 ),
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Office Address'),
@@ -129,7 +130,7 @@ class _UpdateViewState extends State<UpdateView> {
                     }
                     return null;
                   },
-                  initialValue: widget.student.offadd,
+                  initialValue: widget.alumni.offadd,
                 ),
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Email ID '),
@@ -142,7 +143,7 @@ class _UpdateViewState extends State<UpdateView> {
                     }
                     return null;
                   },
-                  initialValue: widget.student.email,
+                  initialValue: widget.alumni.email,
                 ),
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Mobile Number '),
@@ -155,7 +156,7 @@ class _UpdateViewState extends State<UpdateView> {
                     }
                     return null;
                   },
-                  initialValue: widget.student.mobile,
+                  initialValue: widget.alumni.mobile,
                 ),
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Current City'),
@@ -168,7 +169,7 @@ class _UpdateViewState extends State<UpdateView> {
                     }
                     return null;
                   },
-                  initialValue: widget.student.currcity,
+                  initialValue: widget.alumni.currcity,
                 ),
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Current Company'),
@@ -181,7 +182,7 @@ class _UpdateViewState extends State<UpdateView> {
                     }
                     return null;
                   },
-                  initialValue: widget.student.currcomp,
+                  initialValue: widget.alumni.currcomp,
                 ),
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Designation'),
@@ -194,7 +195,7 @@ class _UpdateViewState extends State<UpdateView> {
                     }
                     return null;
                   },
-                  initialValue: widget.student.desg,
+                  initialValue: widget.alumni.desg,
                 ),
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Session From'),
@@ -207,7 +208,7 @@ class _UpdateViewState extends State<UpdateView> {
                     }
                     return null;
                   },
-                  initialValue: widget.student.sesfrom,
+                  initialValue: widget.alumni.sesfrom,
                 ),
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Session To'),
@@ -220,7 +221,7 @@ class _UpdateViewState extends State<UpdateView> {
                     }
                     return null;
                   },
-                  initialValue: widget.student.sesto,
+                  initialValue: widget.alumni.sesto,
                 ),
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Branch'),
@@ -233,7 +234,7 @@ class _UpdateViewState extends State<UpdateView> {
                     }
                     return null;
                   },
-                  initialValue: widget.student.branch,
+                  initialValue: widget.alumni.branch,
                 ),
                 RaisedButton(
                   child: Text('Update'),
@@ -256,8 +257,9 @@ class _UpdateViewState extends State<UpdateView> {
   }
 
   void updaterecordinsql() {
-    final Student updatedstudent = Student(
-        aluid: widget.student.aluid,
+    final db = Provider.of<DBProvider>(context, listen: false);
+    final Alumni updatedalumni = Alumni(
+        aluid: widget.alumni.aluid,
         branch: branch,
         corradd: corradd,
         currcity: currcity,
@@ -272,13 +274,14 @@ class _UpdateViewState extends State<UpdateView> {
         offadd: offadd,
         sesfrom: sesfrom,
         sesto: sesto);
-    DBProvider.db.updaterecord(updatedstudent);
-    print(updatedstudent.lastname);
+    db.updaterecord(updatedalumni);
+    print(updatedalumni.lastname);
     Navigator.pop(context, true);
   }
 
   void deleterecord() {
-    DBProvider.db.deleterecord(id);
+    final db = Provider.of<DBProvider>(context, listen: false);
+    db.deleterecord(widget.alumni);
     Navigator.pop(context, true);
   }
 }

@@ -1,4 +1,4 @@
-name: sql
+name: base
 description: A new Flutter project.
 
 # The following defines the version and build number for your application.
@@ -19,12 +19,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  sqflite:
+  path_provider:
+  provider:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
-  sqflite:
-  path_provider:
 
 dev_dependencies:
   flutter_test:
@@ -32,14 +33,10 @@ dev_dependencies:
 
 
 # For information on the generic Dart part of this file, see the
-# following page: https://www.dartlang.org/tools/pub/pubspec
+# following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
 flutter:
-  #fonts:
-   # - family: ProductSans
-    #  fonts:
-     #   - asset: assets/ProductSans-Regular.ttf
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
@@ -62,7 +59,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

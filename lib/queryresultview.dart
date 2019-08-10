@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sql/DbProvider.dart';
-import 'package:sql/recordview.dart';
-import 'package:sql/updateview.dart';
+import 'package:provider/provider.dart';
+import 'recordview.dart';
+import 'updateview.dart';
+import 'DBprovider.dart';
 
 class QueryResultView extends StatefulWidget {
   final String searchfieldname;
@@ -16,13 +17,14 @@ class QueryResultView extends StatefulWidget {
 class _QueryResultViewState extends State<QueryResultView> {
   @override
   Widget build(BuildContext context) {
+    final db = Provider.of<DBProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Results'),
       ),
       body: FutureBuilder(
-        future: DBProvider.db
-            .searchdatabase(widget.searchfieldname, widget.searchvalue),
+        future: db
+            .searchrecords(searchby: widget.searchfieldname, searchvalue: widget.searchvalue),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (!snapshot.hasData) {
             return Center(
@@ -57,7 +59,7 @@ class _QueryResultViewState extends State<QueryResultView> {
                   context,
                   MaterialPageRoute(
                     builder: (BuildContext context) => RecordView(
-                      student: snapshot.data[index],
+                      alumni: snapshot.data[index],
                     ),
                   ),
                 ),
@@ -67,7 +69,7 @@ class _QueryResultViewState extends State<QueryResultView> {
                     context,
                     MaterialPageRoute(
                       builder: (BuildContext context) => UpdateView(
-                        student: snapshot.data[index],
+                        alumni: snapshot.data[index],
                       ),
                     ),
                   ).then<void>((didupdate) {
