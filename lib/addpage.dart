@@ -1,8 +1,10 @@
-import 'package:base/DBprovider.dart';
-import 'package:base/queryview.dart';
-import 'allpage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'DBprovider.dart';
+import 'queryview.dart';
+import 'allpage.dart';
+import 'helpers/customroutetransition.dart';
 import 'models/alumni.dart';
 
 class AddPage extends StatefulWidget {
@@ -24,7 +26,7 @@ class _AddPageState extends State<AddPage> {
               title: Text('Veiw All Records'),
               onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(
+                CustomRoute(
                   builder: (context) => AllPage(),
                 ),
               ),

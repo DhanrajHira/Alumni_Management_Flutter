@@ -1,8 +1,9 @@
 import 'package:base/models/alumni.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import './widgets/record_fielddata.dart';
-import './widgets/record_fieldname.dart';
+import './widgets/recordviewbody.dart';
 
 class RecordView extends StatefulWidget {
   final Alumni alumni;
@@ -20,15 +21,18 @@ class _RecordViewState extends State<RecordView> with TickerProviderStateMixin {
   void initState() {
     _controller =
         AnimationController(duration: Duration(milliseconds: 700), vsync: this);
-    _slideanimation = Tween<Offset>(
-            begin: Offset(0.0, 1.0), end: Offset.zero)
+    _slideanimation = Tween<Offset>(begin: Offset(0.0, 1.0), end: Offset.zero)
         .animate(CurvedAnimation(parent: _controller, curve: Curves.ease));
     super.initState();
   }
 
+  void runanimations() {
+    _controller.forward();
+  }
+
   @override
   Widget build(BuildContext context) {
-    runanimations();
+    // runanimations();
     return Scaffold(
         body: CustomScrollView(
       slivers: <Widget>[
@@ -47,90 +51,99 @@ class _RecordViewState extends State<RecordView> with TickerProviderStateMixin {
         ),
         SliverList(
             delegate: SliverChildListDelegate([
-          SlideTransition(
-              child: FadeTransition(opacity: CurvedAnimation(parent: _controller, curve: Curves.easeIn),child: RecordViewFieldName('Alu ID')), position: _slideanimation),
-          RecordFieldData(widget.alumni.aluid),
-          RecordViewFieldName('First Name'),
-          RecordFieldData(widget.alumni.firstname),
-          RecordViewFieldName('Last Name'),
-          RecordFieldData(widget.alumni.lastname),
-          RecordViewFieldName('Date of Birth'),
-          RecordFieldData(widget.alumni.dob),
-          RecordViewFieldName('Gender'),
-          RecordFieldData(widget.alumni.gender),
-          RecordViewFieldName('Correspondance Address'),
-          RecordFieldData(widget.alumni.corradd),
-          RecordViewFieldName('Office Address'),
-          RecordFieldData(widget.alumni.offadd),
-          RecordViewFieldName('Email Address'),
-          RecordFieldData(widget.alumni.email),
-          RecordViewFieldName('Mobile Number'),
-          RecordFieldData(widget.alumni.mobile),
-          RecordViewFieldName('Current City'),
-          RecordFieldData(widget.alumni.currcity),
-          RecordViewFieldName('Current Company'),
-          RecordFieldData(widget.alumni.currcomp),
-          RecordViewFieldName('Designation'),
-          RecordFieldData(widget.alumni.desg),
-          RecordViewFieldName('Session from'),
-          RecordFieldData(widget.alumni.sesfrom),
-          RecordViewFieldName('Session to '),
-          RecordFieldData(widget.alumni.sesto),
-          RecordViewFieldName('Branch'),
-          RecordFieldData(widget.alumni.branch),
+          FieldCategory(
+            categoryicon: Icons.person,
+            widgets: <Widget>[
+              RecordData(
+                fieldname: 'First Name',
+                fieldvalue: widget.alumni.firstname,
+              ),
+              RecordData(
+                fieldname: 'Last Name',
+                fieldvalue: widget.alumni.lastname,
+              ),
+              RecordData(
+                fieldname: 'Gender',
+                fieldvalue: widget.alumni.gender,
+              )
+            ],
+          ),
+          FieldCategory(
+            categoryicon: Icons.calendar_today,
+            widgets: <Widget>[
+              RecordData(
+                fieldname: 'Date of Birth',
+                fieldvalue: widget.alumni.dob,
+              ),
+              RecordData(
+                fieldname: 'Session From',
+                fieldvalue: widget.alumni.sesfrom,
+              ),
+              RecordData(
+                fieldname: 'Session To',
+                fieldvalue: widget.alumni.sesto,
+              ),
+            ],
+          ),
+          FieldCategory(
+            categoryicon: Icons.contact_mail,
+            widgets: <Widget>[
+              RecordData(
+                fieldname: 'Phone Number',
+                fieldvalue: widget.alumni.mobile,
+              ),
+              RecordData(
+                fieldname: 'Email',
+                fieldvalue: widget.alumni.email,
+              )
+            ],
+          ),
+          FieldCategory(
+            categoryicon: Icons.work,
+            widgets: <Widget>[
+              RecordData(
+                fieldname: 'Current Company',
+                fieldvalue: widget.alumni.currcomp,
+              ),
+              RecordData(
+                fieldname: 'Branch',
+                fieldvalue: widget.alumni.branch,
+              ),
+              RecordData(
+                fieldname: 'Designation',
+                fieldvalue: widget.alumni.desg,
+              ),
+            ],
+          ),
+          FieldCategory(
+            categoryicon: Icons.location_on,
+            widgets: <Widget>[
+              RecordData(
+                fieldname: 'Current Address',
+                fieldvalue: widget.alumni.currcity,
+              ),
+              RecordData(
+                fieldname: 'Current City',
+                fieldvalue: widget.alumni.currcity,
+              ),
+              RecordData(
+                fieldname: 'Correspondance Address',
+                fieldvalue: widget.alumni.corradd,
+              ),
+              RecordData(
+                fieldname: 'Office Address',
+                fieldvalue: widget.alumni.offadd,
+              )
+            ],
+          )
         ])),
       ],
-    ) /*ListView(
-        children: <Widget>[
-          Container(
-            padding: EdgeInsets.all(16.0),
-            height: 200,
-            width: 200,
-            child: Hero(
-              tag: alumni.aluid,
-              child: CircleAvatar(
-                child: Text(
-                  alumni.firstname[0],
-                  style: TextStyle(fontSize: 50),
-                ),
-              ),
-            ),
-          ),
-          RecordViewFieldName('Alu ID'),
-          RecordFieldData(alumni.aluid),
-          RecordViewFieldName('First Name'),
-          RecordFieldData(alumni.firstname),
-          RecordViewFieldName('Last Name'),
-          RecordFieldData(alumni.lastname),
-          RecordViewFieldName('Date of Birth'),
-          RecordFieldData(alumni.dob),
-          RecordViewFieldName('Gender'),
-          RecordFieldData(alumni.gender),
-          RecordViewFieldName('Correspondance Address'),
-          RecordFieldData(alumni.corradd),
-          RecordViewFieldName('Office Address'),
-          RecordFieldData(alumni.offadd),
-          RecordViewFieldName('Email Address'),
-          RecordFieldData(alumni.email),
-          RecordViewFieldName('Mobile Number'),
-          RecordFieldData(alumni.mobile),
-          RecordViewFieldName('Current City'),
-          RecordFieldData(alumni.currcity),
-          RecordViewFieldName('Current Company'),
-          RecordFieldData(alumni.currcomp),
-          RecordViewFieldName('Designation'),
-          RecordFieldData(alumni.desg),
-          RecordViewFieldName('Session from'),
-          RecordFieldData(alumni.sesfrom),
-          RecordViewFieldName('Session to '),
-          RecordFieldData(alumni.sesto),
-          RecordViewFieldName('Branch'),
-          RecordFieldData(alumni.branch),
-        ],
-          ),*/
-        );
+    ));
   }
-  void runanimations(){
-    _controller.forward();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }
