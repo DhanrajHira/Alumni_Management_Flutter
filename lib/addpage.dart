@@ -26,7 +26,7 @@ class _AddPageState extends State<AddPage> {
               title: Text('Veiw All Records'),
               onTap: () => Navigator.push(
                 context,
-                CustomRoute(
+                SlideUpRoute(
                   builder: (context) => AllPage(),
                 ),
               ),
