@@ -40,13 +40,13 @@ class _AllPageState extends State<AllPage> {
                   icon: Icon(Icons.edit),
                   onPressed: () => Navigator.push(
                       context,
-                      CustomRoute(
+                      SlideUpRoute(
                           builder: (context) =>
                               UpdateView(alumni: snapshot.data[index]))),
                 ),
                 onTap: () => Navigator.push(
                   context,
-                  CustomRoute(
+                  FadeRoute(
                     builder: (context) => RecordView(
                       alumni: snapshot.data[index],
                     ),

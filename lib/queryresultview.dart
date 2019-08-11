@@ -1,3 +1,4 @@
+import 'package:base/helpers/customroutetransition.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'recordview.dart';
@@ -57,7 +58,7 @@ class _QueryResultViewState extends State<QueryResultView> {
                 title: Text(snapshot.data[index].firstname),
                 onTap: () => Navigator.push(
                   context,
-                  MaterialPageRoute(
+                  FadeRoute(
                     builder: (BuildContext context) => RecordView(
                       alumni: snapshot.data[index],
                     ),
@@ -67,7 +68,7 @@ class _QueryResultViewState extends State<QueryResultView> {
                   icon: Icon(Icons.edit),
                   onPressed: () => Navigator.push(
                     context,
-                    MaterialPageRoute(
+                    SlideUpRoute(
                       builder: (BuildContext context) => UpdateView(
                         alumni: snapshot.data[index],
                       ),
