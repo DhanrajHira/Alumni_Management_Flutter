@@ -6,9 +6,13 @@ import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/sqlite_api.dart';
 import 'package:path/path.dart';
 import './models/alumni.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DBProvider with ChangeNotifier {
+  
   Database _database;
+  List<String> bookmarked;
+
   Future<Database> get database async {
     if (_database != null) {
       return _database;
@@ -55,6 +59,25 @@ class DBProvider with ChangeNotifier {
     db.delete('Alumni', where: 'Alu_ID = ?', whereArgs: [alumni.aluid]);
   }
 
+  void savebookmarks(String aluid)async {
+    //call this to add a new Alumni ID  to the bookmarked list 
+    final pref = await SharedPreferences.getInstance();
+    bookmarked.add(aluid);
+    pref.setStringList('bookmarked', bookmarked);
+  }
+
+  Future<void> removebookmark (String aluid) async {
+    final pref= await SharedPreferences.getInstance();
+    bookmarked.remove(aluid);
+    pref.setStringList('bookmarked', bookmarked);
+  }
+
+  Future<void> readbookmarked() async 
+  {//sets the local bookmarks list which can later be used to access bookmarked Alumni IDs 
+    final pref = await SharedPreferences.getInstance();
+    bookmarked = pref.getStringList('bookmarked');
+  }
+
   Future<List<Alumni>> searchrecords(
       {String searchby, String searchvalue}) async {
     final db = await database;
@@ -65,5 +88,22 @@ class DBProvider with ChangeNotifier {
     List<Alumni> formatedresults =
         results.map((datamap) => Alumni.frommap(datamap)).toList();
     return formatedresults;
+  }
+
+  Future<List<Alumni>> getbookmarkedrecords(List aluidlist) async {
+    var db = await database;
+    String formatedquery = formatrawquery(aluidlist);
+    List resultlist = await db.rawQuery('SELECT * FROM Alumni WHERE Alu_ID IN $formatedquery');
+    List formated = resultlist.map((datamap)=>Alumni.frommap(datamap)).toList();
+    return formated;
+  }
+  String formatrawquery(List<String> raw){
+    String result = '(';
+    for (String x in raw){
+      result = result + x +',';
+    }
+    result= result.substring(0, result.length-1);
+    result= result+')';
+    return result;
   }
 }
