@@ -91,7 +91,7 @@ class _QueryViewState extends State<QueryView> {
     }
     Navigator.push(
         context,
-        CustomRoute(
+        SlideUpRoute(
             builder: (context) => QueryResultView(
                   searchfieldname: dropdownValue,
                   searchvalue: searchvalue,
