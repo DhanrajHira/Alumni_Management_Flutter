@@ -69,6 +69,7 @@ class _BuildFormState extends State<BuildForm> {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<DBProvider>(context).readbookmarked();
     return Form(
       key: _formkey,
       child: Padding(
